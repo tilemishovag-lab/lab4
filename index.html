@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Практика 4</title>
+</head>
+<body>
+
+  <!-- Задание 1: Счетчик -->
+  <h1>Счетчик</h1>
+  <h2 id="num">0</h2>
+  <button onclick="minus()">уменьшить</button>
+  <button onclick="reset()">сбросить</button>
+  <button onclick="plus()">увеличить</button>
+
+  <hr>
+
+  <!-- Задание 2: Лото -->
+  <h1>Лото</h1>
+  <div id="lotto"></div>
+  <br>
+  <button onclick="generateLotto()">Сгенерировать</button>
+
+  <script>
+    // ===== Логика Счетчика =====
+    let count = 0;
+    const numEl = document.getElementById('num');
+
+    function updateColor() {
+      numEl.innerText = count;
+      if (count > 0) {
+        numEl.style.color = 'green';
+      } else if (count < 0) {
+        numEl.style.color = 'red';
+      } else {
+        numEl.style.color = 'gray';
+      }
+    }
+
+    // Инициализация цвета для нуля
+    updateColor();
+
+    function plus() {
+      count++;
+      updateColor();
+    }
+
+    function minus() {
+      count--;
+      updateColor();
+    }
+
+    function reset() {
+      count = 0;
+      updateColor();
+    }
+
+    // ===== Логика Лото =====
+    function getRandomInt(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function generateLotto() {
+      const container = document.getElementById('lotto');
+      container.innerHTML = ''; // очищаем перед новым запуском
+
+      for (let i = 0; i < 6; i++) {
+        let rand = getRandomInt(1, 99);
+        
+        // Форматируем в 01, 02 и т.д.
+        if (rand < 10) {
+          rand = '0' + rand;
+        }
+
+        // Создаем элементы через JS
+        const circle = document.createElement('span');
+        circle.innerText = rand;
+        
+        // Минимальное оформление, чтобы выглядело как кружок
+        circle.style.border = '1px solid black';
+        circle.style.borderRadius = '50%';
+        circle.style.padding = '10px';
+        circle.style.margin = '5px';
+        circle.style.display = 'inline-block';
+
+        container.appendChild(circle);
+      }
+    }
+  </script>
+</body>
+</html>
